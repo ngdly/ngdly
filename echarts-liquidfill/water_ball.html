@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .chart {
+            width:270px;
+            height: 270px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="chart" id="water_ball"></div>
+<script src='js/echarts-all.js'></script>
+<script src='js/echarts-liquidfill.js'></script>
+<script>
+//  var wlimg=document.getElementById("wl");
+  var wlimg = new Image();
+  wlimg.onload=function(){
+    console.log(typeof wlimg);
+    charInit();
+  }
+  wlimg.src="images/wl.png";
+  var chart = echarts.init(document.getElementById("water_ball"));
+
+  function charInit(){
+    var seriesData={
+      series: [{
+        type: 'liquidFill',
+        data: [ {
+          value: 0.74,
+          direction: 'left',
+          itemStyle: {
+            shadowBlur:0,
+            color: '#ff0000'
+          }
+        },{
+          value: 0.77,
+          direction: 'right',
+          itemStyle: {
+            shadowBlur:0,
+            color: '#b7f1ff'
+          }
+        }, {
+          value: 0.74,
+          direction: 'left',
+          itemStyle: {
+            shadowBlur:0,
+            color: {
+              image: wlimg, // 支持为 HTMLImageElement, HTMLCanvasElement，不支持路径字符串
+              repeat: 'repeat-x' // 是否平铺, 可以是 'repeat-x', 'repeat-y', 'no-repeat'
+            }
+          }
+        }],
+        radius: '95%',
+        outline: {
+          show: false,
+          borderDistance: 0,
+          itemStyle: {
+            color: 'none',
+            borderColor: '#04d1fe',
+            borderWidth: 4,
+            shadowBlur: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.25)'
+          }
+        },
+        backgroundStyle: {
+          color: '#fff',
+          borderColor: {
+              image: wlimg, // 支持为 HTMLImageElement, HTMLCanvasElement，不支持路径字符串
+              repeat: 'repeat-x' // 是否平铺, 可以是 'repeat-x', 'repeat-y', 'no-repeat'
+            },
+          borderWidth: 4,
+        },
+        silent:true
+      }]
+    }
+    chart.setOption(seriesData);
+    chart.setOption({
+      baseOption: seriesData,
+      media: [{
+        query: {
+          maxWidth: 268
+        },
+        option: {
+          series: [{
+            label: {
+              fontSize: 26
+            }
+          }]
+        }
+      }],
+    });
+  }
+
+</script>
+</body>
+</html>
